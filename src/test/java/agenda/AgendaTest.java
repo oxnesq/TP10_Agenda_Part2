@@ -56,10 +56,22 @@ public class AgendaTest {
 
     @Test
     public void testFindByTitle() {
-        String title = "Simple event";
+        // 0 event
+        String title = "No event";
         ArrayList<Event> byTitle = new ArrayList<Event>();
+        assertEquals(byTitle, agenda.findByTitle(title), "il y a 0 event de ce nom dans l'agenda");
+
+        // 1 event
+        String title2 = "Simple event";
         byTitle.add(simple);
-        assertEquals(byTitle, agenda.findByTitle(title), "il y a 1 event de ce nom dans l'agenda");
+        assertEquals(byTitle, agenda.findByTitle(title2), "il y a 1 event de ce nom dans l'agenda");
+
+        // pluseurs event
+        LocalDateTime nov_1__2020_23_30 = LocalDateTime.of(2020, 11, 1, 23, 30);
+        Event e = new Event("Simple event", nov_1__2020_23_30, min_120);
+        agenda.addEvent(e);
+        byTitle.add(e);
+        assertEquals(byTitle, agenda.findByTitle(title2), "il y a 2 event de ce nom dans l'agenda");
     }
 
     @Test
