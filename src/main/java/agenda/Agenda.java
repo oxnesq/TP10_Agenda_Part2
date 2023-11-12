@@ -53,7 +53,22 @@ public class Agenda {
      * @return vrai s’il y a de la place dans l'agenda pour cet événement
      */
     public boolean isFreeFor(Event e) {
-        Boolean bo =null;
+        Boolean bo =true;
+        for (Event alreadyIr : theEvents){
+            if (alreadyIr.getStart().isBefore(e.getStart())){
+                // simple commence avant e mais finit apres debut de e
+                if (alreadyIr.getStart().plus(alreadyIr.getDuration()).isAfter(e.getStart()) ){
+                    bo=false;
+                }
+            } else if (alreadyIr.getStart().equals(e.getStart())){
+                // simple et e commencent en mm temps
+                bo=false;
+            }if (alreadyIr.getStart().isAfter(e.getStart())){
+                // simple commence apres e mais avant sa fin
+                if (e.getStart().plus(e.getDuration()).isAfter(alreadyIr.getStart()) ){
+                    bo=false;
+                }}
+        }
         return bo;
     }
 }

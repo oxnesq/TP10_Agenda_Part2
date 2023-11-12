@@ -62,6 +62,41 @@ public class AgendaTest {
         assertEquals(byTitle, agenda.findByTitle(title), "il y a 1 event de ce nom dans l'agenda");
     }
 
+    @Test
+    public void testisFreeFor() {
+        // nov_1__2020_22_30 => 2H (00h30) date de simple
+
+        LocalDateTime nov_1__2020_21_30 = LocalDateTime.of(2020, 11, 1, 21, 30);
+        LocalDateTime nov_1__2020_23_30 = LocalDateTime.of(2020, 11, 1, 23, 30);
+        LocalDateTime nov_1__2020_22_00 = LocalDateTime.of(2020, 11, 1, 22, 00);
+        LocalDateTime nov_2__2020_02_00 = LocalDateTime.of(2020, 11, 1, 2, 00);
+        Duration min_30 = Duration.ofMinutes(30);
+        Duration min_240 = Duration.ofMinutes(240);
+
+
+        Event e = new Event("start before", nov_1__2020_23_30, min_120);
+        assertEquals(false,agenda.isFreeFor(e), "simple commence avant e mais finit pendant e");
+
+        Event e1 = new Event("Same start ", nov_1__2020_22_30, min_120);
+        assertEquals(false,agenda.isFreeFor(e1), "simple et e commence en mm temps");
+
+        Event e2 = new Event("Start during simple", nov_1__2020_23_30, min_120);
+        assertEquals(false,agenda.isFreeFor(e2), "simple commence pendant e finit après e");
+
+        Event e3 = new Event("Out", nov_1__2020_22_00, min_240);
+        assertEquals(false,agenda.isFreeFor(e3), "e commence avant simple finit après simple");
+
+        Event e4 = new Event("In", nov_1__2020_23_30, min_30);
+        assertEquals(false,agenda.isFreeFor(e4), "e commence pdt simple finit pdt simple");
+
+        Event e5 = new Event("Commence et finit av", nov_1__2020_21_30, min_30);
+        assertEquals(true,agenda.isFreeFor(e5), "e commence et finit avant simple");
+
+        Event e6 = new Event("Commence apres la fin de simple", nov_2__2020_02_00, min_30);
+        assertEquals(true,agenda.isFreeFor(e6), "e commence et finit apres simple");
+
+    }
+
 
 
 
