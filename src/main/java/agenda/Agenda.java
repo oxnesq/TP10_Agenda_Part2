@@ -38,8 +38,13 @@ public class Agenda {
      * @return les événements qui ont le même titre
      */
     public List<Event> findByTitle(String title) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        ArrayList<Event> byTitle = new ArrayList<Event>();
+        for (Event e : theEvents){
+            if (e.getTitle().equals(title)){
+                byTitle.add(e);
+            }
+        }
+        return byTitle;
     }
 
     /**
@@ -48,7 +53,7 @@ public class Agenda {
      * @return vrai s’il y a de la place dans l'agenda pour cet événement
      */
     public boolean isFreeFor(Event e) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        Boolean bo =null;
+        return bo;
     }
 }
